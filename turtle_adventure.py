@@ -2,9 +2,12 @@
 The turtle_adventure module maintains all classes related to the Turtle's
 adventure game.
 """
+import math
+from abc import ABC
 from turtle import RawTurtle
 from gamelib import Game, GameElement
 import random
+
 
 class TurtleGameElement(GameElement):
     """
@@ -249,7 +252,7 @@ class Enemy(TurtleGameElement):
 # * Check whether the player hits this enemy, then call the
 #   self.game.game_over_lose() method in the TurtleAdventureGame class.
 
-class RandomWalkEnemy(Enemy):
+class RandomWalkEnemy(Enemy, ABC):
     """
     Enemy that moves randomly on the screen
     """
@@ -258,6 +261,15 @@ class RandomWalkEnemy(Enemy):
         super().__init__(game, size, color)
         self.dx = random.randint(-5, 5)
         self.dy = random.randint(-5, 5)
+
+    def create(self) -> None:
+        pass
+
+    def delete(self) -> None:
+        pass
+
+    def render(self) -> None:
+        pass
 
     def update(self) -> None:
         # Update enemy position randomly
@@ -273,7 +285,7 @@ class RandomWalkEnemy(Enemy):
         super().update()
 
 
-class ChasingEnemy(Enemy):
+class ChasingEnemy(Enemy, ABC):
     """
     Enemy that chases the player
     """
@@ -294,7 +306,7 @@ class ChasingEnemy(Enemy):
         super().update()
 
 
-class FencingEnemy(Enemy):
+class FencingEnemy(Enemy, ABC):
     """
     Enemy that moves around the home in a square-like pattern
     """
@@ -323,7 +335,7 @@ class FencingEnemy(Enemy):
         super().update()
 
 
-class SpiralEnemy(Enemy):
+class LastEnemy(Enemy, ABC):
     """
     Enemy that moves in a spiral pattern
     """
@@ -333,6 +345,17 @@ class SpiralEnemy(Enemy):
         self.speed = 2  # Adjust speed as needed
         self.angle = 0
         self.radius = 0
+
+    def update(self) -> None:
+        """
+        Update enemy position to move in a spiral pattern
+        """
+        self.radius += self.speed
+        self.angle += 0.1  # Adjust angle increment as needed
+        self.x = self.game.home.x + self.radius * math.cos(self.angle)
+        self.y = self.game.home.y + self.radius * math.sin(self.angle)
+
+        super().update()
 
 
 class DemoEnemy(Enemy):
@@ -376,6 +399,7 @@ class EnemyGenerator:
     def __init__(self, game: "TurtleAdventureGame", level: int):
         self.__game: TurtleAdventureGame = game
         self.__level: int = level
+        self.create_enemy()
 
         # example
         self.__game.after(100, self.create_enemy)
@@ -383,7 +407,7 @@ class EnemyGenerator:
     @property
     def game(self) -> "TurtleAdventureGame":
         """
-        Get reference to the associated TurtleAnvengerGame instance
+        Get reference to the associated TurtleAvengerGame instance
         """
         return self.__game
 
@@ -398,10 +422,13 @@ class EnemyGenerator:
         """
         Create a new enemy, possibly based on the game level
         """
-        new_enemy = DemoEnemy(self.__game, 20, "red")
+        new_enemy = RandomWalkEnemy(self.__game, 20, "red")
         new_enemy.x = 100
         new_enemy.y = 100
         self.game.add_element(new_enemy)
+
+        interval = 1000
+        self.game.after(interval, self.create_enemy)
 
 
 class TurtleAdventureGame(Game):  # pylint: disable=too-many-ancestors
