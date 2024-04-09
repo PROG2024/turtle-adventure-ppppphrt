@@ -483,11 +483,42 @@ class EnemyGenerator:
         """
         Create a new enemy, possibly based on the game level
         """
-        enemy_types = [RandomWalkEnemy, ChasingEnemy, FencingEnemy, SpiralEnemy]
-        for enemy_type in enemy_types:
-            for _ in range(random.randint(1, 5)):
-                new_enemy = enemy_type(self.__game, random.randint(10, 20), "red")
-                self.__game.add_enemy(new_enemy)
+
+
+        for _ in range(3):
+            x = random.randint(50, self.__game.screen_width - 50)  # Random x position
+            y = random.randint(50, self.__game.screen_height - 50)  # Random y position
+            new_enemy = ChasingEnemy(self.__game, random.randint(20, 40), "red")
+            new_enemy.x = x  # Set initial x position
+            new_enemy.y = y  # Set initial y position
+            self.__game.add_enemy(new_enemy)
+
+
+        for _ in range(2):
+            x = random.randint(50, self.__game.screen_width - 50)
+            y = random.randint(50, self.__game.screen_height - 50)
+            new_enemy = FencingEnemy(self.__game, random.randint(20, 40), "red")
+            new_enemy.x = x
+            new_enemy.y = y
+            self.__game.add_enemy(new_enemy)
+
+
+        for _ in range(3):
+            x = random.randint(50, self.__game.screen_width - 50)
+            y = random.randint(50, self.__game.screen_height - 50)
+            new_enemy = RandomWalkEnemy(self.__game, random.randint(20, 40), "red")
+            new_enemy.x = x
+            new_enemy.y = y
+            self.__game.add_enemy(new_enemy)
+
+
+        for _ in range(2):
+            x = random.randint(50, self.__game.screen_width - 50)
+            y = random.randint(50, self.__game.screen_height - 50)
+            new_enemy = SpiralEnemy(self.__game, random.randint(20, 40), "red")
+            new_enemy.x = x
+            new_enemy.y = y
+            self.__game.add_enemy(new_enemy)
 
 
 class TurtleAdventureGame(Game):  # pylint: disable=too-many-ancestors
