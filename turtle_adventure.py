@@ -252,7 +252,7 @@ class Enemy(TurtleGameElement):
 # * Check whether the player hits this enemy, then call the
 #   self.game.game_over_lose() method in the TurtleAdventureGame class.
 
-class RandomWalkEnemy(Enemy, ABC):
+class RandomWalkEnemy(Enemy):
     """
     Enemy that moves randomly on the screen
     """
@@ -285,7 +285,7 @@ class RandomWalkEnemy(Enemy, ABC):
         super().update()
 
 
-class ChasingEnemy(Enemy, ABC):
+class ChasingEnemy(Enemy):
     """
     Enemy that chases the player
     """
@@ -306,7 +306,7 @@ class ChasingEnemy(Enemy, ABC):
         super().update()
 
 
-class FencingEnemy(Enemy, ABC):
+class FencingEnemy(Enemy):
     """
     Enemy that moves around the home in a square-like pattern
     """
@@ -335,7 +335,7 @@ class FencingEnemy(Enemy, ABC):
         super().update()
 
 
-class LastEnemy(Enemy, ABC):
+class SpiralEnemy(Enemy):
     """
     Enemy that moves in a spiral pattern
     """
