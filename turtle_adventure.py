@@ -287,6 +287,9 @@ class RandomWalkEnemy(Enemy):
         if self.y < self.size / 2 or self.y > self.game.screen_height - self.size / 2:
             self.dy = -self.dy
 
+        if self.hits_player():
+            self.game.game_over_lose()
+
         super().update()
 
 
@@ -321,6 +324,9 @@ class ChasingEnemy(Enemy):
         if distance > 0:
             self.x += self.speed * dx / distance
             self.y += self.speed * dy / distance
+
+        if self.hits_player():
+            self.game.game_over_lose()
 
         super().update()
 
@@ -366,6 +372,9 @@ class FencingEnemy(Enemy):
         elif self.y > self.game.home.y + self.game.home.size / 2:
             self.direction = (0, -1)
 
+        if self.hits_player():
+            self.game.game_over_lose()
+
         super().update()
 
 
@@ -403,6 +412,9 @@ class SpiralEnemy(Enemy):
         self.angle += 0.1  # Adjust angle increment as needed
         self.x = self.game.home.x + self.radius * math.cos(self.angle)
         self.y = self.game.home.y + self.radius * math.sin(self.angle)
+
+        if self.hits_player():
+            self.game.game_over_lose()
 
         super().update()
 
@@ -474,7 +486,7 @@ class EnemyGenerator:
         enemy_types = [RandomWalkEnemy, ChasingEnemy, FencingEnemy, SpiralEnemy]
         for enemy_type in enemy_types:
             for _ in range(random.randint(1, 5)):
-                new_enemy = enemy_type(self.__game, random.randint(50, 100), "red")
+                new_enemy = enemy_type(self.__game, random.randint(10, 20), "red")
                 self.__game.add_enemy(new_enemy)
 
 
