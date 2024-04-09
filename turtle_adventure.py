@@ -270,7 +270,11 @@ class RandomWalkEnemy(Enemy):
         pass
 
     def render(self) -> None:
-        pass
+        self.canvas.coords(self.__id,
+                           self.x,
+                           self.y,
+                           self.x + self.size,
+                           self.y + self.size)
 
     def update(self) -> None:
         # Update enemy position randomly
@@ -296,13 +300,18 @@ class ChasingEnemy(Enemy):
         self.speed = 2  # Adjust speed as needed
 
     def create(self) -> None:
-        pass
+        self.__id = self.canvas.create_oval(
+            0, 0, self.size / 2, self.size / 2, fill="red")
 
     def delete(self) -> None:
         pass
 
     def render(self) -> None:
-        pass
+        self.canvas.coords(self.__id,
+                           self.x,
+                           self.y,
+                           self.x + self.size,
+                           self.y + self.size)
 
     def update(self) -> None:
         # Update enemy position to chase the player
@@ -328,13 +337,18 @@ class FencingEnemy(Enemy):
 
 
     def create(self) -> None:
-        pass
+        self.__id = self.canvas.create_oval(
+            0, 0, self.size / 2, self.size / 2, fill="green")
 
     def delete(self) -> None:
         pass
 
     def render(self) -> None:
-        pass
+        self.canvas.coords(self.__id,
+                           self.x,
+                           self.y,
+                           self.x + self.size,
+                           self.y + self.size)
 
     def update(self) -> None:
         # Update enemy position to move around the home
@@ -368,13 +382,18 @@ class SpiralEnemy(Enemy):
 
 
     def create(self) -> None:
-        pass
+        self.__id = self.canvas.create_oval(
+            0, 0, self.size / 2, self.size / 2, fill="yellow")
 
     def delete(self) -> None:
         pass
 
     def render(self) -> None:
-        pass
+        self.canvas.coords(self.__id,
+                           self.x,
+                           self.y,
+                           self.x + self.size,
+                           self.y + self.size)
 
     def update(self) -> None:
         """
