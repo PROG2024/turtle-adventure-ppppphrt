@@ -263,7 +263,8 @@ class RandomWalkEnemy(Enemy):
         self.dy = random.randint(-5, 5)
 
     def create(self) -> None:
-        pass
+        self.__id = self.canvas.create_oval(
+            0, 0, self.size / 2, self.size / 2, fill="orange")
 
     def delete(self) -> None:
         pass
@@ -294,6 +295,15 @@ class ChasingEnemy(Enemy):
         super().__init__(game, size, color)
         self.speed = 2  # Adjust speed as needed
 
+    def create(self) -> None:
+        pass
+
+    def delete(self) -> None:
+        pass
+
+    def render(self) -> None:
+        pass
+
     def update(self) -> None:
         # Update enemy position to chase the player
         dx = self.game.player.x - self.x
@@ -315,6 +325,16 @@ class FencingEnemy(Enemy):
         super().__init__(game, size, color)
         self.speed = 2  # Adjust speed as needed
         self.direction = random.choice([(1, 0), (0, 1), (-1, 0), (0, -1)])
+
+
+    def create(self) -> None:
+        pass
+
+    def delete(self) -> None:
+        pass
+
+    def render(self) -> None:
+        pass
 
     def update(self) -> None:
         # Update enemy position to move around the home
@@ -345,6 +365,16 @@ class SpiralEnemy(Enemy):
         self.speed = 2  # Adjust speed as needed
         self.angle = 0
         self.radius = 0
+
+
+    def create(self) -> None:
+        pass
+
+    def delete(self) -> None:
+        pass
+
+    def render(self) -> None:
+        pass
 
     def update(self) -> None:
         """
@@ -422,13 +452,11 @@ class EnemyGenerator:
         """
         Create a new enemy, possibly based on the game level
         """
-        new_enemy = RandomWalkEnemy(self.__game, 20, "red")
-        new_enemy.x = 100
-        new_enemy.y = 100
-        self.game.add_element(new_enemy)
-
-        interval = 1000
-        self.game.after(interval, self.create_enemy)
+        enemy_types = [RandomWalkEnemy, ChasingEnemy, FencingEnemy, SpiralEnemy]
+        for enemy_type in enemy_types:
+            for _ in range(random.randint(1, 5)):
+                new_enemy = enemy_type(self.__game, random.randint(50, 100), "red")
+                self.__game.add_enemy(new_enemy)
 
 
 class TurtleAdventureGame(Game):  # pylint: disable=too-many-ancestors
